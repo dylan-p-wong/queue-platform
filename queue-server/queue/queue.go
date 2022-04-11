@@ -5,6 +5,7 @@ import (
 	"time"
 	"dylan/queue/db"
 	"dylan/queue/models"
+	"dylan/queue/helpers"
 )
 
 type Queue struct {  
@@ -43,6 +44,8 @@ func (q *Queue) LetEntriesPass(number int) {
 
 	if result.Error == nil {
 		qe.Status = "PASSED"
+		qe.RedirectToken = helpers.GenerateRedirectToken(qe.QueueID.String(), 10)
+
 		db.GetDB().Save(&qe)
 	}
 }

@@ -18,6 +18,11 @@ type jwtQueueIDCustomClaim struct {
 	jwt.StandardClaims
 }
 
+type jwtRedirectCustomClaim struct {
+	QueueID string `json:"queue_entry_id"`
+	jwt.StandardClaims
+}
+
 func GenerateToken(UserID string) string {
 	secretKey := os.Getenv("JWT_SECRET")
 
@@ -44,6 +49,25 @@ func GenerateQueueToken(QueueEntryID string) string {
 		QueueEntryID,
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().AddDate(1, 0, 0).Unix(),
+			IssuedAt:  time.Now().Unix(),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	t, err := token.SignedString([]byte(secretKey))
+	if err != nil {
+		panic(err)
+	}
+	return t
+}
+
+func GenerateRedirectToken(QueueID string, NumberOfMinutes int) string {
+	secretKey := os.Getenv("JWT_SECRET")
+
+	claims := &jwtRedirectCustomClaim{
+		QueueID,
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Minute * time.Duration(NumberOfMinutes)).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
 	}

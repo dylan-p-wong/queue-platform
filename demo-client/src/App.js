@@ -3,14 +3,15 @@ import { QueueProvider } from "./QueueProvider";
 
 function App() {
   const handleClick = async () => {
-    const res = await fetch('http://localhost:4444')
-
-    console.log(res)
+    const res = await fetch(process.env.REACT_APP_API_URL, {
+      credentials: "include",
+      Cache: "no-cache",
+    });
 
     if (res.redirected) {
       window.location.href = res.url;
     }
-  }
+  };
 
   return (
     <BrowserRouter>

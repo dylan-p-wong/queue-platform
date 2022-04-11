@@ -29,14 +29,11 @@ func main() {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{os.Getenv("CORS_ORIGIN")},
+		AllowOrigins:     []string{os.Getenv("CORS_ORIGIN"), "http://localhost:3001"},
 		AllowMethods:     []string{"POST", "PUT", "PATCH", "GET", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length", "Origin"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == os.Getenv("CORS_ORIGIN")
-		},
 		MaxAge:           12 * time.Hour,
 	}));
 
@@ -63,8 +60,6 @@ func main() {
 		queueRoutes.POST("/:id/start", queueController.Start)
 		queueRoutes.POST("/:id/stop", queueController.Stop)
 		queueRoutes.GET("/:id/entry", queueEntryController.Create)
-		queueRoutes.GET("/:id/entry/redirect", queueEntryController.RedirectBack)
-		queueRoutes.GET("/test", queueEntryController.Test)
 	}
 
 	r.Run()
