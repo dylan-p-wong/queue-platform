@@ -44,7 +44,7 @@ func (q *Queue) LetEntriesPass(number int) {
 
 	if result.Error == nil {
 		qe.Status = "PASSED"
-		qe.RedirectToken = helpers.GenerateRedirectToken(qe.QueueID.String(), 10)
+		qe.RedirectToken = helpers.GenerateRedirectToken(qe.ID.String(), qe.QueueID.String(), 10)
 
 		db.GetDB().Save(&qe)
 	}

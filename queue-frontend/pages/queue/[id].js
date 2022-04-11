@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 function Queue({ id }) {
   const [queueEntry, setQueueEntry] = useState(null);
+  const [error, setError] = useState(false);
 
   const redirectBack = async () => {
     const res = await fetch(`/api/queue/${id}/redirect`);
@@ -15,13 +16,24 @@ function Queue({ id }) {
   const getQueueEntry = async () => {
     const res = await fetch(`/api/queue/${id}/entry`);
     const data = await res.json();
-    console.log(data);
+
+    if (data.error) {
+      setError(true);
+    }
     setQueueEntry(data);
   };
 
   useEffect(() => {
     getQueueEntry();
-  }, [id]);
+  }, []);
+
+  if (error) {
+    return (
+      <div>
+        <p>Invalid queue configuration</p>
+      </div>
+    )
+  }
 
   if (!queueEntry) {
     return (
