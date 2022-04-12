@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 export const withQueueProtection = (handler, queueId) => {
   return async (req, res) => {
     if (!req.cookies['redirect-token']) {
-      return res.redirect(`http://localhost:3001/queue/${queueId}`);
+      return res.redirect(`http://localhost:3001/queues/${queueId}`);
     }
 
     try {
@@ -14,7 +14,7 @@ export const withQueueProtection = (handler, queueId) => {
       }
 
     } catch(err) {
-      return res.redirect(`http://localhost:3001/queue/${queueId}`);
+      return res.redirect(`http://localhost:3001/queues/${queueId}`);
     }
 
     return handler(req, res);

@@ -3,9 +3,12 @@ package helpers
 import (
 	"crypto/rand"
 	"crypto/subtle"
+	"dylan/queue/db"
+	"dylan/queue/models"
 	"encoding/base64"
 	"fmt"
 	"strings"
+
 	"golang.org/x/crypto/argon2"
 )
 
@@ -17,17 +20,16 @@ type PasswordConfig struct {
 }
 
 var c = &PasswordConfig{
-	time: 1,
-	memory: 64 * 1024,
+	time:    1,
+	memory:  64 * 1024,
 	threads: 4,
-	keyLen: 32,
+	keyLen:  32,
 }
 
 func HashPassword(password string) (string, error) {
 	salt := make([]byte, 16)
 
-	if _, err := rand.Read(salt)
-	err != nil {
+	if _, err := rand.Read(salt); err != nil {
 		return "", err
 	}
 
@@ -65,4 +67,10 @@ func ComparePassword(password, hash string) (bool, error) {
 	comparisonHash := argon2.IDKey([]byte(password), salt, c.time, c.memory, c.threads, c.keyLen)
 
 	return (subtle.ConstantTimeCompare(decodedHash, comparisonHash) == 1), nil
+}
+
+func EmailExists(email string) bool {
+	var user models.User
+	result := db.GetDB().First(&user, "email = ?", email)
+	return result.RowsAffected > 0
 }

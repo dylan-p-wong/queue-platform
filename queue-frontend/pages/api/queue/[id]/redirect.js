@@ -10,6 +10,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     
     if (data.status === "PASSED") {
+      res.setHeader('Set-Cookie', `queue-token-${id}=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
       return res.redirect(`http://localhost:3002?redirect-token=${data.redirect_token}`);
     }
 

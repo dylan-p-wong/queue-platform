@@ -2,7 +2,6 @@ package controller
 
 import (
 	"os"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"dylan/queue/models"
 	"dylan/queue/db"
@@ -28,8 +27,6 @@ func (c *QueueEntryController) Create(context *gin.Context) {
 	}
 
 	val, _ := context.Cookie("queue-token" + "-" + q.ID.String())
-
-	fmt.Println(val)
 	
 	if val == "" {
 		qe := models.QueueEntry{QueueID: uuid.MustParse(context.Param("id"))}

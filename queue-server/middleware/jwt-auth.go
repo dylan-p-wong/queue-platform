@@ -1,15 +1,16 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"dylan/queue/helpers"
+
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )
 
 func AuthorizeJWT() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		val := context.Request.Header.Get("authorization")
-		
+
 		if val == "" {
 			context.AbortWithStatusJSON(401, gin.H{
 				"error": "Unauthorized",

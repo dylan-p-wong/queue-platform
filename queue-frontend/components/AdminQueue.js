@@ -35,14 +35,22 @@ export default function AdminQueue({ queue, refresh }) {
       <p>updated_at: {queue.updated_at}</p>
       <p>active: {queue.stopped ? "STOPPED" : "RUNNING"}</p>
       <p>entries: {queue.queue_entries.length}</p>
+      <p>passed: {queue.queue_entries.reduce((total, val) => val.status === "PASSED" ? total + 1 : total, 0)}</p>
+      <p>waiting: {queue.queue_entries.reduce((total, val) => val.status === "WAITING" ? total + 1 : total, 0)}</p>
       <button onClick={startQueue}>Start</button>
       <button onClick={stopQueue}>Stop</button>
       <button onClick={refresh}>Refresh</button>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <Link href={`/admin/queues/${queue.id}`}>
+        <button>Expanded View</button>
+      </Link>
+      <Link href={`/queues/${queue.id}`}>
+        <button>Go to Queue</button>
+      </Link>
+      {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {queue.queue_entries.map(queueEntry => (
           <AdminQueueEntry queueEntry={queueEntry}/>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }
