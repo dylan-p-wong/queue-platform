@@ -42,15 +42,15 @@ func main() {
 	queueController := controller.QueueController{}
 	queueEntryController := controller.QueueEntryController{}
 
-	authRoutes := r.Group("/auth", middleware.AuthorizeJWT())
+	userRoutes := r.Group("/user", middleware.AuthorizeJWT())
 	{
-		authRoutes.GET("/", authController.GetUser);
+		userRoutes.GET("/", authController.GetUser);
 	}
 
-	userRoutes := r.Group("/user")
+	authRoutes := r.Group("/auth")
 	{
-		userRoutes.POST("/register", userController.Register)
-		userRoutes.POST("/login", userController.Login)
+		authRoutes.POST("/register", userController.Register)
+		authRoutes.POST("/login", userController.Login)
 	}
 
 	adminQueueRoutes := r.Group("/admin/queue", middleware.AuthorizeJWT())
@@ -64,11 +64,6 @@ func main() {
 
 	queueRoutes := r.Group("/queue")
 	{
-		queueRoutes.GET("/", queueController.FindAll)
-		queueRoutes.POST("/", queueController.Create)
-		queueRoutes.GET("/:id", queueController.Find)
-		queueRoutes.POST("/:id/start", queueController.Start)
-		queueRoutes.POST("/:id/stop", queueController.Stop)
 		queueRoutes.GET("/:id/entry", queueEntryController.Create)
 	}
 

@@ -15,6 +15,7 @@ type Queue struct {
 	Active       bool         `json:"active"`
 	QueueEntries []QueueEntry `gorm:"ForeignKey:QueueID" json:"queue_entries"`
 	Stopped      bool         `gorm:"-" json:"stopped"`
+	UserID       uuid.UUID    `json:"queue_id"`
 }
 
 func (queue *Queue) BeforeCreate(tx *gorm.DB) error {

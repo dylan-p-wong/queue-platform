@@ -7,18 +7,22 @@ export default function Login() {
     data[e.target.name] = e.target.value;
   } 
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
 
-    fetch('/api/user/login', {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(data)
-    })
+    });
+
+    if (res.redirected) {
+      window.location.href = res.url;
+    }
   }
 
   return (
     <div>
+      <h1>Login</h1>
       <form onSubmit={onSubmit}>
         <label>Email:
           <input name="email" onChange={onChange} type="text" />

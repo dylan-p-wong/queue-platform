@@ -8,12 +8,12 @@ export const withQueueProtection = (handler, queueId) => {
 
     try {
       const decoded = await jwt.verify(req.cookies['redirect-token'], process.env.QUEUE_SECRET);
-      
       if (decoded['queue_id'] !== queueId) {
         throw new Error("Invalid token.");
       }
 
     } catch(err) {
+      console.log(err)
       return res.redirect(`http://localhost:3001/queues/${queueId}`);
     }
 

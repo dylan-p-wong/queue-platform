@@ -1,13 +1,42 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import AdminQueue from '../../../components/AdminQueue';
 
-function AdminQueue({ id }) {
+function AdminQueuePage({ id }) {
+  const [refreshCount, setRefershCount] = useState(0);
+  const [queue, setQueue] = useState(null);
+
+  const refresh = () => {
+    setRefershCount(refreshCount + 1);
+  }
+
+  const getQueue = async () => {
+    const res = await fetch(`/api/admin/queue/${id}`, {
+      credentials: 'include'
+    });
+    const data = await res.json();
+    setQueue(data);
+  }
+
+  useEffect(() => {
+    getQueue();
+  }, [refreshCount]);
+
+  if (!queue) {
+    return (
+      <div>
+        <h1>No Queue</h1>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <p>id</p>
+      <div>
+        <AdminQueue refresh={refresh} queue={queue} showEntries={true}/>
+        <h1>{id}</h1>
+      </div>
     </div>
-  );
+  )
 }
 
 export const getServerSideProps = async (ctx) => {
@@ -15,5 +44,4 @@ export const getServerSideProps = async (ctx) => {
   return { props: { id } };
 };
 
-
-export default AdminQueue
+export default AdminQueuePage

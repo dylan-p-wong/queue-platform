@@ -2,33 +2,29 @@ import { useEffect, useState } from "react"
 import Link from "next/link";
 import AdminQueueEntry from "./AdminQueueEntry";
 
-export default function AdminQueue({ queue, refresh }) {
+export default function AdminQueue({ queue, refresh, showEntries }) {
 
   const startQueue = async () => {
-    const res = await fetch(`http://localhost:8080/queue/${queue.id}/start`, {
+    const res = await fetch(`/api/admin/queue/${queue.id}/start`, {
       method: 'POST',
       credentials: 'include'
     });
     const data = await res.json();
-    console.log(data);
     refresh();
   }
 
   const stopQueue = async () => {
-    const res = await fetch(`http://localhost:8080/queue/${queue.id}/stop`, {
+    const res = await fetch(`/api/admin/queue/${queue.id}/stop`, {
       method: 'POST',
       credentials: 'include'
     });
     const data = await res.json();
-    console.log(data);
     refresh();
   }
 
   return (
     <div key={queue.id} style={{ border: '1px solid black', margin: 24 }}>
-      <Link href={`/queue/${queue.id}`}>
-        <p>id: {queue.id}</p>
-      </Link>
+      <p>id: {queue.id}</p>
       <p>title: {queue.title}</p>
       <p>description: {queue.description}</p>
       <p>created_at: {queue.created_at}</p>
@@ -46,11 +42,11 @@ export default function AdminQueue({ queue, refresh }) {
       <Link href={`/queues/${queue.id}`}>
         <button>Go to Queue</button>
       </Link>
-      {/* <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {showEntries && <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {queue.queue_entries.map(queueEntry => (
           <AdminQueueEntry queueEntry={queueEntry}/>
         ))}
-      </div> */}
+      </div>}
     </div>
   )
 }

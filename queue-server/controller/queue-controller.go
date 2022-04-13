@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"dylan/queue/queue"
 	"dylan/queue/input"
@@ -12,6 +13,10 @@ type QueueController struct {
 }
 
 func (c *QueueController) Create(context *gin.Context) {
+	user_id := context.MustGet("user_id")
+
+	fmt.Println(user_id)
+
 	var input input.QueueInput
 
 	err := context.ShouldBind(&input)

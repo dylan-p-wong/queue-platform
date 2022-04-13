@@ -10,7 +10,7 @@ export default function AdminQueues() {
   }
 
   const getQueues = async () => {
-    const res = await fetch(`http://localhost:8080/queue/`, {
+    const res = await fetch(`/api/admin/queue/`, {
       credentials: 'include'
     });
     const data = await res.json();
@@ -22,12 +22,10 @@ export default function AdminQueues() {
   }, [refreshCount]);
 
   return (
-    <div>
-      <div>
-        {queues.map(queue => (
-            <AdminQueue refresh={refresh} queue={queue}/>
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {queues.map(queue => (
+          <AdminQueue refresh={refresh} queue={queue}/>
+      ))}
     </div>
   )
 }

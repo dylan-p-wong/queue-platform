@@ -1,15 +1,15 @@
 package queue
 
 import (
+	"dylan/queue/db"
+	"dylan/queue/helpers"
+	"dylan/queue/models"
 	"fmt"
 	"time"
-	"dylan/queue/db"
-	"dylan/queue/models"
-	"dylan/queue/helpers"
 )
 
-type Queue struct {  
-	ID string
+type Queue struct {
+	ID      string
 	Stopped bool
 }
 
@@ -22,14 +22,14 @@ func (q *Queue) StartQueue() {
 	q.Stopped = false
 
 	go func() {
-			for i := 1; true; i++ {
-				if q.Stopped {
-					return
-				}
-				q.LetEntriesPass(1)
-				fmt.Println(q.ID, q.Stopped);
-				time.Sleep(time.Millisecond * 1000);
+		for i := 1; true; i++ {
+			if q.Stopped {
+				return
 			}
+			q.LetEntriesPass(1)
+			fmt.Println(q.ID, q.Stopped)
+			time.Sleep(time.Millisecond * 1000)
+		}
 	}()
 }
 
