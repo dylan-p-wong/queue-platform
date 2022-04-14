@@ -13,9 +13,12 @@ type Queue struct {
 	CreatedAt    time.Time    `json:"created_at"`
 	UpdatedAt    time.Time    `json:"updated_at"`
 	Active       bool         `json:"active"`
+	PassRate     int          `json:"pass_rate" binding:"required"`
+	TokenTime    int          `json:"token_time" binding:"required"`
+	Redirect     string       `json:"redirect_domain" binding:"required"`
+	UserID       uuid.UUID    `json:"queue_id" binding:"required"`
 	QueueEntries []QueueEntry `gorm:"ForeignKey:QueueID" json:"queue_entries"`
 	Stopped      bool         `gorm:"-" json:"stopped"`
-	UserID       uuid.UUID    `json:"queue_id"`
 }
 
 func (queue *Queue) BeforeCreate(tx *gorm.DB) error {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import AdminQueue from "../../../components/AdminQueue";
+import PanelLayout from "../../../components/layout/PanelLayout";
 
 export default function AdminQueues() {
   const [refreshCount, setRefershCount] = useState(0);
@@ -29,3 +30,7 @@ export default function AdminQueues() {
     </div>
   )
 }
+
+AdminQueues.getLayout = function getLayout(page) {
+  return <PanelLayout>{page}</PanelLayout>;
+};

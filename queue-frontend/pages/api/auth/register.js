@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       res.setHeader('Set-Cookie', serialize('authorization',  data['token'], { path: '/' }));
     }
 
-    res.json(data);
+    res.redirect('/admin');
   } catch (e) {
     console.log(e)
     res.status(500).json({ e });

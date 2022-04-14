@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminQueue from '../../../components/AdminQueue';
+import PanelLayout from '../../../components/layout/PanelLayout';
 
 function AdminQueuePage({ id }) {
   const [refreshCount, setRefershCount] = useState(0);
@@ -31,10 +32,7 @@ function AdminQueuePage({ id }) {
 
   return (
     <div>
-      <div>
-        <AdminQueue refresh={refresh} queue={queue} showEntries={true}/>
-        <h1>{id}</h1>
-      </div>
+      <AdminQueue refresh={refresh} queue={queue} showEntries={true}/>
     </div>
   )
 }
@@ -42,6 +40,10 @@ function AdminQueuePage({ id }) {
 export const getServerSideProps = async (ctx) => {
   const { id } = ctx.query;
   return { props: { id } };
+};
+
+AdminQueuePage.getLayout = function getLayout(page) {
+  return <PanelLayout>{page}</PanelLayout>;
 };
 
 export default AdminQueuePage

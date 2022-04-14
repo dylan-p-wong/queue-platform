@@ -1,29 +1,27 @@
 package controller
 
 import (
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"dylan/queue/queue"
+	"dylan/queue/db"
 	"dylan/queue/input"
 	"dylan/queue/models"
-	"dylan/queue/db"
+	"dylan/queue/queue"
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type QueueController struct {
 }
 
 func (c *QueueController) Create(context *gin.Context) {
-	user_id := context.MustGet("user_id")
-
-	fmt.Println(user_id)
+	user_id := context.MustGet("user_id").(string)
 
 	var input input.QueueInput
 
-	err := context.ShouldBind(&input)
+	err := context.ShouldBindJSON(&input)
 
-	q := models.Queue{Title: input.Title, Description: input.Description}
-
-	db.GetDB().Create(&q)
+	fmt.Println(err)
 
 	if err != nil {
 		context.JSON(400, gin.H{
@@ -31,6 +29,10 @@ func (c *QueueController) Create(context *gin.Context) {
 		})
 		return
 	}
+
+	q := models.Queue{Title: input.Title, Description: input.Description, PassRate: input.PassRate, TokenTime: input.TokenTime, Redirect: input.Redirect, UserID: uuid.MustParse(user_id) }
+
+	db.GetDB().Create(&q)
 
 	queue.GetQueueManager().AddQueue(q.ID.String())
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import PanelLayout from '../../components/layout/PanelLayout';
 
 export default function AdminIndex() {
   const [user, setUser] = useState(null);
@@ -29,3 +30,7 @@ export default function AdminIndex() {
     </div>
   )
 }
+
+AdminIndex.getLayout = function getLayout(page) {
+  return <PanelLayout>{page}</PanelLayout>;
+};
