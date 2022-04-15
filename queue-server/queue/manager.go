@@ -1,5 +1,10 @@
 package queue
 
+import (
+	"dylan/queue/db"
+	"dylan/queue/models"
+)
+
 var qm *QueueManager
 
 type QueueManager struct {  
@@ -39,7 +44,15 @@ func (qm *QueueManager) AddQueue(uuid string) {
 		return
 	}
 
-	q := Queue{ ID: uuid, Stopped: true }
+	var foundQueue models.Queue
+
+	result := db.GetDB().First(&foundQueue, "id = ?", uuid)
+
+	if result.Error != nil {
+		return
+	}
+
+	q := Queue{ ID: uuid, Stopped: true, PassRate: foundQueue.PassRate, TokenTime: foundQueue.TokenTime }
 	qm.queues = append(qm.queues, &q)
 }
 

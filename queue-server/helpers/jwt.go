@@ -62,14 +62,14 @@ func GenerateQueueToken(QueueEntryID string) string {
 	return t
 }
 
-func GenerateRedirectToken(QueueEntryID string, QueueID string, NumberOfMinutes int) string {
+func GenerateRedirectToken(QueueEntryID string, QueueID string, NumberOfMilliseconds int) string {
 	secretKey := os.Getenv("JWT_SECRET")
 
 	claims := &jwtRedirectCustomClaim{
 		QueueEntryID,
 		QueueID,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute * time.Duration(NumberOfMinutes)).Unix(),
+			ExpiresAt: time.Now().Add(time.Millisecond * time.Duration(NumberOfMilliseconds)).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
 	}
