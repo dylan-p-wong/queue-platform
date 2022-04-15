@@ -2,7 +2,7 @@
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      const response = await fetch(`http://localhost:8080/admin/queue/`, {
+      const response = await fetch(`${process.env.QUEUE_API_URL}/admin/queue/`, {
         credentials: "include",
         headers: {
           authorization: req.cookies[`authorization`]
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
   } else if (req.method === 'POST') {
     try {
-      const response = await fetch(`http://localhost:8080/admin/queue/`, {
+      const response = await fetch(`${process.env.QUEUE_API_URL}/admin/queue/`, {
         credentials: "include",
         method: 'POST',
         body: req.body,

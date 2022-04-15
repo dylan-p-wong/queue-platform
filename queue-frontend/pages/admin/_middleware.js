@@ -7,13 +7,13 @@ export async function middleware(req, ev) {
     headers["authorization"] = req.cookies[`authorization`];
 
     try {
-      const response = await fetch('http://localhost:8080/user', { credentials: 'include', headers });
+      const response = await fetch(`${process.env.QUEUE_API_URL}/user`, { credentials: 'include', headers });
       const data = await response.json();
     } catch (e) {
-      return NextResponse.redirect("http://localhost:3001/auth/register");
+      return NextResponse.redirect(`${BASE_URL}/auth/register`);
     }
   } else {
-    return NextResponse.redirect("http://localhost:3001/auth/register");
+    return NextResponse.redirect(`${BASE_URL}/auth/register`);
   }
 
   return NextResponse.next();

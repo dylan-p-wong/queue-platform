@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   const { id } = req.query;
   try {
-    const response = await fetch(`http://localhost:8080/queue/${id}/entry`, {
+    const response = await fetch(`${process.env.QUEUE_API_URL}/queue/${id}/entry`, {
       credentials: "include",
       headers: {
         'Cookie': `queue-token-${id}=${req.cookies[`queue-token-${id}`]}`

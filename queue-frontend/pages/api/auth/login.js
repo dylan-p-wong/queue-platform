@@ -2,7 +2,7 @@ import { serialize } from 'cookie';
 
 export default async function handler(req, res) {
   try {
-    const response = await fetch(`http://localhost:8080/auth/login`, {
+    const response = await fetch(`${process.env.QUEUE_API_URL}/auth/login`, {
       credentials: "include",
       method: 'POST',
       body: req.body,

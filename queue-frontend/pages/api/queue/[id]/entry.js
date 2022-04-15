@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(`http://localhost:8080/queue/${id}/entry`, {
+    const response = await fetch(`${process.env.QUEUE_API_URL}/queue/${id}/entry`, {
       credentials: "include",
       headers,
     });

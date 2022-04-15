@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
   
     try {
-      const response = await fetch(`http://localhost:8080/admin/queue/${id}`, {
+      const response = await fetch(`${process.env.QUEUE_API_URL}/admin/queue/${id}`, {
         credentials: "include",
         headers: {
           authorization: req.cookies[`authorization`]
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     const { id } = req.query;
   
     try {
-      const response = await fetch(`http://localhost:8080/admin/queue/${id}`, {
+      const response = await fetch(`${process.env.QUEUE_API_URL}/admin/queue/${id}`, {
         credentials: "include",
         headers: {
           authorization: req.cookies[`authorization`]
