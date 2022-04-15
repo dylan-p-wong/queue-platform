@@ -58,6 +58,7 @@ func main() {
 		adminQueueRoutes.GET("/", queueController.FindAll)
 		adminQueueRoutes.POST("/", queueController.Create)
 		adminQueueRoutes.GET("/:id", queueController.Find)
+		adminQueueRoutes.DELETE("/:id", queueController.Delete)
 		adminQueueRoutes.POST("/:id/start", queueController.Start)
 		adminQueueRoutes.POST("/:id/stop", queueController.Stop)
 	}

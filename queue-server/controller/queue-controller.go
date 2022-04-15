@@ -5,7 +5,6 @@ import (
 	"dylan/queue/input"
 	"dylan/queue/models"
 	"dylan/queue/queue"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -20,8 +19,6 @@ func (c *QueueController) Create(context *gin.Context) {
 	var input input.QueueInput
 
 	err := context.ShouldBindJSON(&input)
-
-	fmt.Println(err)
 
 	if err != nil {
 		context.JSON(400, gin.H{
@@ -74,11 +71,11 @@ func (c *QueueController) Stop(context *gin.Context) {
 }
 
 func (c *QueueController) FindAll(context *gin.Context) {
+	user_id := context.MustGet("user_id").(string)
 
 	var queues []models.Queue
 
-	db.GetDB().Preload("QueueEntries").Find(&queues)
-
+	db.GetDB().Where("user_id = ?", user_id).Preload("QueueEntries").Find(&queues)
 	for i, q := range queues {
 		queues[i].Stopped = queue.GetQueueManager().QueueStopped(q.ID.String())
 	}
@@ -101,4 +98,24 @@ func (c *QueueController) Find(context *gin.Context) {
 	q.Stopped = queue.GetQueueManager().QueueStopped(q.ID.String())
 
 	context.JSON(200, q)
+}
+
+func (c *QueueController) Delete(context *gin.Context) {
+	var q models.Queue
+
+	result := db.GetDB().Preload("QueueEntries").First(&q, "id = ?", context.Param("id"))
+
+	if result.Error != nil {
+		context.JSON(404, gin.H{
+			"error": "Not found",
+		})
+		return
+	}
+
+	queue.GetQueueManager().StopQueue(q.ID.String())
+
+	db.GetDB().Where("queue_id = ?", q.ID.String()).Delete(&models.QueueEntry{})
+	db.GetDB().Delete(q)
+
+	context.Status(204)
 }

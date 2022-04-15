@@ -22,6 +22,15 @@ export default function AdminQueue({ queue, refresh, showEntries }) {
     refresh();
   }
 
+  const deleteQueue = async () => {
+    const res = await fetch(`/api/admin/queue/${queue.id}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    const data = await res.json();
+    refresh();
+  }
+
   return (
     <div key={queue.id} style={{ border: '1px solid black', margin: 24 }}>
       <p>id: {queue.id}</p>
@@ -33,6 +42,7 @@ export default function AdminQueue({ queue, refresh, showEntries }) {
       <p>entries: {queue.queue_entries.length}</p>
       <p>passed: {queue.queue_entries.reduce((total, val) => val.status === "PASSED" ? total + 1 : total, 0)}</p>
       <p>waiting: {queue.queue_entries.reduce((total, val) => val.status === "WAITING" ? total + 1 : total, 0)}</p>
+      <button onClick={deleteQueue}>Delete</button>
       <button onClick={startQueue}>Start</button>
       <button onClick={stopQueue}>Stop</button>
       <button onClick={refresh}>Refresh</button>
