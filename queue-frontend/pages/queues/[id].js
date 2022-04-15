@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useInterval } from '../../components/useInterval';
 
 function Queue({ id }) {
   const [queueEntry, setQueueEntry] = useState(null);
@@ -23,9 +24,9 @@ function Queue({ id }) {
     setQueueEntry(data);
   };
 
-  useEffect(() => {
+  useInterval(() => {
     getQueueEntry();
-  }, []);
+  }, 1000)
 
   if (error) {
     return (
@@ -57,7 +58,7 @@ function Queue({ id }) {
       <p>Updated At: {queueEntry.updated_at}</p>
       <p>Status {queueEntry.status}</p>
       <p>Redirect token {queueEntry.redirect_token}</p>
-      <button onClick={redirectBack}>Take me back</button>
+      {queueEntry.redirect_token && <button id='redirect-back' onClick={redirectBack}>Take me back</button>}
     </div>
   );
 }

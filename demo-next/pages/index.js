@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div>
       <p>{protectedData}</p>
-      <button onClick={callQueueProtectedRoute}>Route that needs to be protected</button>
+      <button id="protected" onClick={callQueueProtectedRoute}>Route that needs to be protected</button>
     </div>
   )
 }

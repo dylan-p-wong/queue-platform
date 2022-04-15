@@ -14,7 +14,6 @@ type Queue struct {
 }
 
 func (q *Queue) StartQueue() {
-	fmt.Println(q.Stopped)
 	if !q.Stopped {
 		return
 	}
