@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useInterval } from '../../components/useInterval';
 
-function Queue({ id }) {
+function Queue({ id, redirect }) {
   const [queueEntry, setQueueEntry] = useState(null);
   const [error, setError] = useState(false);
 
@@ -15,8 +15,13 @@ function Queue({ id }) {
   };
 
   const getQueueEntry = async () => {
-    const res = await fetch(`/api/queue/${id}/entry`);
+    const res = await fetch(`/api/queue/${id}/entry`, {
+      method: 'POST',
+      body: JSON.stringify({ redirect })
+    });
     const data = await res.json();
+
+    console.log(data)
 
     if (data.error) {
       setError(true);
@@ -65,7 +70,8 @@ function Queue({ id }) {
 
 export const getServerSideProps = async (ctx) => {
   const { id } = ctx.query;
-  return { props: { id } };
+
+  return { props: { id, redirect: ctx.req.headers.referer } };
 };
 
 

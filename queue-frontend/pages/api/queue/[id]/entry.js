@@ -11,6 +11,8 @@ export default async function handler(req, res) {
     const response = await fetch(`${process.env.QUEUE_API_URL}/queue/${id}/entry`, {
       credentials: "include",
       headers,
+      method: 'POST',
+      body: req.body
     });
     const data = await response.json();
 

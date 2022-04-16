@@ -1,11 +1,12 @@
 package controller
 
 import (
+	"strings"
 	"os"
 	"github.com/gin-gonic/gin"
 	"dylan/queue/models"
+	"dylan/queue/input"
 	"dylan/queue/db"
-	"github.com/google/uuid"
 	"dylan/queue/helpers"
 	"github.com/golang-jwt/jwt"
 )
@@ -29,7 +30,25 @@ func (c *QueueEntryController) Create(context *gin.Context) {
 	val, _ := context.Cookie("queue-token" + "-" + q.ID.String())
 	
 	if val == "" {
-		qe := models.QueueEntry{QueueID: uuid.MustParse(context.Param("id"))}
+		var input input.QueueEntryInput
+
+		err := context.ShouldBindJSON(&input)
+	
+		if err != nil {
+			context.JSON(400, gin.H{
+				"error": "Incorrect input",
+			})
+			return
+		}
+
+		if (!strings.HasPrefix(input.Redirect, q.Redirect)) {
+			context.JSON(404, gin.H{
+				"error": "Bad request domain",
+			})
+			return
+		}
+
+		qe := models.QueueEntry{QueueID: q.ID, Redirect: input.Redirect}
 
 		db.GetDB().Create(&qe)
 	

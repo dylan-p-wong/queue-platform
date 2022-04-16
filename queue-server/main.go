@@ -65,7 +65,7 @@ func main() {
 
 	queueRoutes := r.Group("/queue")
 	{
-		queueRoutes.GET("/:id/entry", queueEntryController.Create)
+		queueRoutes.POST("/:id/entry", queueEntryController.Create)
 	}
 
 	r.Run()

@@ -16,7 +16,7 @@ type Queue struct {
 	PassRate     int          `json:"pass_rate" binding:"required"`
 	TokenTime    int          `json:"token_time" binding:"required"`
 	Redirect     string       `json:"redirect_domain" binding:"required"`
-	UserID       uuid.UUID    `json:"queue_id" binding:"required"`
+	UserID       uuid.UUID    `json:"user_id" binding:"required"`
 	QueueEntries []QueueEntry `gorm:"ForeignKey:QueueID" json:"queue_entries"`
 	Stopped      bool         `gorm:"-" json:"stopped"`
 }

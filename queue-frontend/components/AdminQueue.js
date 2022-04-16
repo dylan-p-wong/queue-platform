@@ -36,6 +36,7 @@ export default function AdminQueue({ queue, refresh, showEntries }) {
       <p>id: {queue.id}</p>
       <p>title: {queue.title}</p>
       <p>description: {queue.description}</p>
+      <p>redirect: {queue.redirect_domain}</p>
       <p>created_at: {queue.created_at}</p>
       <p>updated_at: {queue.updated_at}</p>
       <p>active: {queue.stopped ? "STOPPED" : "RUNNING"}</p>
