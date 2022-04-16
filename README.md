@@ -9,6 +9,7 @@ A redirection based queue to handle high traffic serverside points on websites. 
 * [Go](https://go.dev/)
 * [Next.js](https://nextjs.org/)
 * [React.js](https://reactjs.org/)
+* [PostgreSQL](https://www.postgresql.org/)
 
 ## How it works
 
@@ -20,6 +21,7 @@ On a protected queue route, if a user does not have a valid queue token, middlew
 
 - [x] Initial queue flow
 - [x] Admin dashboard
-- [ ] First demo site
+- [x] First demo site
+- [ ] Timed drops
 - [ ] Bot protection features
 - [ ] More integrations

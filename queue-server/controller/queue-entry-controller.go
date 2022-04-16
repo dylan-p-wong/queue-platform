@@ -55,6 +55,8 @@ func (c *QueueEntryController) Create(context *gin.Context) {
 		jwtToken := helpers.GenerateQueueToken(qe.ID.String())
 		
 		context.SetCookie("queue-token" + "-" + q.ID.String(), jwtToken, 60*60*24, "/", os.Getenv("COOKIE_ORIGIN"), true, true)
+		
+		qe.Place = helpers.CalculatePlace(qe)
 		context.JSON(200, qe)
 	} else {
 		token, err := helpers.ValidateToken(val)
@@ -73,6 +75,7 @@ func (c *QueueEntryController) Create(context *gin.Context) {
 
 			db.GetDB().First(&qe, "id = ?", claims["queue_entry_id"])
 
+			qe.Place = helpers.CalculatePlace(qe)
 			context.JSON(200, qe)
 		} else {
 			context.AbortWithStatusJSON(401, gin.H{

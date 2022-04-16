@@ -29,6 +29,6 @@ def queue_flow_test():
     driver.quit()  
 
 with futures.ThreadPoolExecutor() as executor:
-  for i in range(1):
+  for i in range(5):
     executor.submit(queue_flow_test)
     time.sleep(0.5)

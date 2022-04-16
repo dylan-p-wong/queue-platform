@@ -40,7 +40,7 @@ export default function AdminQueue({ queue, refresh, showEntries }) {
       <p>created_at: {queue.created_at}</p>
       <p>updated_at: {queue.updated_at}</p>
       <p>active: {queue.stopped ? "STOPPED" : "RUNNING"}</p>
-      <p>entries: {queue.queue_entries.length}</p>
+      <p>entries: {queue.queue_entries?.length}</p>
       <p>passed: {queue.queue_entries.reduce((total, val) => val.status === "PASSED" ? total + 1 : total, 0)}</p>
       <p>waiting: {queue.queue_entries.reduce((total, val) => val.status === "WAITING" ? total + 1 : total, 0)}</p>
       <button onClick={deleteQueue}>Delete</button>

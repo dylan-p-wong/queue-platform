@@ -44,7 +44,9 @@ func (q *Queue) StopQueue() {
 func (q *Queue) LetEntriesPass(number int) {
 	var qes []models.QueueEntry
 
-	result := db.GetDB().Order("created_at").Limit(number).Where("status = ?", "WAITING").Find(&qes)
+	result := db.GetDB().Order("created_at").Limit(number).Where("queue_id = ?", q.ID).Where("status = ?", "WAITING").Find(&qes)
+
+	fmt.Println(result.RowsAffected)
 
 	if result.Error == nil && result.RowsAffected > 0 {
 		for _, qe := range qes {

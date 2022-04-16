@@ -21,22 +21,23 @@ function Queue({ id, redirect }) {
     });
     const data = await res.json();
 
-    console.log(data)
-
     if (data.error) {
-      setError(true);
+      setError(data.error);
     }
     setQueueEntry(data);
   };
 
-  useInterval(() => {
-    getQueueEntry();
-  }, 1000)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getQueueEntry();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (error) {
     return (
       <div>
-        <p>Invalid queue configuration</p>
+        <p>{error}</p>
       </div>
     )
   }
@@ -44,7 +45,7 @@ function Queue({ id, redirect }) {
   if (!queueEntry) {
     return (
       <div>
-        <h1>No entry</h1>
+        <h1>Loading...</h1>
       </div>
     );
   }
@@ -62,6 +63,7 @@ function Queue({ id, redirect }) {
       <p>Created At: {queueEntry.created_at}</p>
       <p>Updated At: {queueEntry.updated_at}</p>
       <p>Status {queueEntry.status}</p>
+      <p>Place in line: {queueEntry.place}</p>
       <p>Redirect token {queueEntry.redirect_token}</p>
       {queueEntry.redirect_token && <button id='redirect-back' onClick={redirectBack}>Take me back</button>}
     </div>
@@ -71,7 +73,7 @@ function Queue({ id, redirect }) {
 export const getServerSideProps = async (ctx) => {
   const { id } = ctx.query;
 
-  return { props: { id, redirect: ctx.req.headers.referer } };
+  return { props: { id, redirect: ctx.req.headers.referer ? ctx.req.headers.referer : null } };
 };
 
 

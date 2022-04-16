@@ -36,10 +36,10 @@ export default function CreateQueue() {
         <label>Description:
           <input name="description" onChange={onChange} type="text" />
         </label>
-        <label>Token time (minutes):
+        <label>Token time (milliseconds):
           <input name="token_time" onChange={onChange} type="number" />
         </label>
-        <label>Passes (per minute):
+        <label>Passes every x milliseconds:
           <input name="pass_rate" onChange={onChange} type="number" />
         </label>
         <label>Redirect root domain:

@@ -15,6 +15,7 @@ type QueueEntry struct {
 	Status        string    `json:"status" gorm:"default:WAITING"`
 	RedirectToken string    `gorm:"redirect_token" json:"redirect_token"`
 	Redirect 			string 		`gorm:"redirect" json:"redirect" binding:"required"`
+	Place         int       `gorm:"-" json:"place"`
 }
 
 func (queueEntry *QueueEntry) BeforeCreate(tx *gorm.DB) error {
