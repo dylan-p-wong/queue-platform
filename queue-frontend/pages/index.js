@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
@@ -12,7 +11,7 @@ export default function Home() {
             <p>Login or Register to access admin panel.</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
+          <a href="https://github.com/dylan-p-wong/queue-platform" className={styles.card}>
             <h2>How it works &rarr;</h2>
             <p>Learn about how the queue platform works.</p>
           </a>
