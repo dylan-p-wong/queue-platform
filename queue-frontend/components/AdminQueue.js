@@ -34,6 +34,7 @@ export default function AdminQueue({ queue, refresh, showEntries }) {
   return (
     <div key={queue.id} style={{ border: '1px solid black', margin: 24 }}>
       <p>id: {queue.id}</p>
+      <p>secret_key: {queue.secret_key}</p>
       <p>title: {queue.title}</p>
       <p>description: {queue.description}</p>
       <p>redirect: {queue.redirect_domain}</p>

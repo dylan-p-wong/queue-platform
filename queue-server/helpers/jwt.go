@@ -62,9 +62,7 @@ func GenerateQueueToken(QueueEntryID string) string {
 	return t
 }
 
-func GenerateRedirectToken(QueueEntryID string, QueueID string, NumberOfMilliseconds int) string {
-	secretKey := os.Getenv("JWT_SECRET")
-
+func GenerateRedirectToken(QueueEntryID string, QueueID string, NumberOfMilliseconds int, secretKey string) string {
 	claims := &jwtRedirectCustomClaim{
 		QueueEntryID,
 		QueueID,

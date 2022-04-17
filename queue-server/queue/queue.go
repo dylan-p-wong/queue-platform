@@ -4,7 +4,6 @@ import (
 	"dylan/queue/db"
 	"dylan/queue/helpers"
 	"dylan/queue/models"
-	"fmt"
 	"math"
 	"time"
 )
@@ -14,6 +13,7 @@ type Queue struct {
 	Stopped   bool
 	PassRate  int
 	TokenTime int
+	SecretKey string
 }
 
 func (q *Queue) StartQueue() {
@@ -46,13 +46,10 @@ func (q *Queue) LetEntriesPass(number int) {
 
 	result := db.GetDB().Order("created_at").Limit(number).Where("queue_id = ?", q.ID).Where("status = ?", "WAITING").Find(&qes)
 
-	fmt.Println(result.RowsAffected)
-
 	if result.Error == nil && result.RowsAffected > 0 {
 		for _, qe := range qes {
-			fmt.Println(qe.CreatedAt)
 			qe.Status = "PASSED"
-			qe.RedirectToken = helpers.GenerateRedirectToken(qe.ID.String(), qe.QueueID.String(), int(math.Max(10 * 60 * 1000, float64(q.TokenTime))))
+			qe.RedirectToken = helpers.GenerateRedirectToken(qe.ID.String(), qe.QueueID.String(), int(math.Max(10 * 60 * 1000, float64(q.TokenTime))), q.SecretKey)
 
 			db.GetDB().Save(&qe)
 		}

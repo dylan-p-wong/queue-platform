@@ -52,7 +52,7 @@ func (qm *QueueManager) AddQueue(uuid string) {
 		return
 	}
 
-	q := Queue{ ID: uuid, Stopped: true, PassRate: foundQueue.PassRate, TokenTime: foundQueue.TokenTime }
+	q := Queue{ ID: uuid, Stopped: true, PassRate: foundQueue.PassRate, TokenTime: foundQueue.TokenTime, SecretKey: foundQueue.SecretKey }
 	qm.queues = append(qm.queues, &q)
 }
 
