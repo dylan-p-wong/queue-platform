@@ -4,6 +4,10 @@ A redirection based queue to handle high traffic serverside points on websites. 
 
 ## About The Project
 
+![alt text](https://media.giphy.com/media/uXAVfiUAUzt9qKcABY/giphy.gif)
+
+The platform is made to redirect traffic from one site to the queue. It then issues redirect tokens to be verired on server side routes to prevent client side tricks. The queue frontend is built with Next.js and the backend is built in Golang, Gin, PostgreSQL and GORM. It uses background Goroutines to manage queue entries and updated entry statues. 
+
 ### Built With
 
 * [Go](https://go.dev/)
@@ -25,3 +29,4 @@ On a protected queue route, if a user does not have a valid queue token, middlew
 - [ ] Timed drops
 - [ ] Bot protection features
 - [ ] More integrations
+- [ ] Scaleability tests
