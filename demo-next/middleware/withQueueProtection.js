@@ -14,8 +14,7 @@ export const withQueueProtection = (handler, queueId) => {
       }
 
     } catch(err) {
-      console.log(err)
-      return res.redirect(`${process.env.QUEUE_BASE_URL}/queues/${queueId}`);
+      return res.status(400).json({ error: err });
     }
 
     return handler(req, res);

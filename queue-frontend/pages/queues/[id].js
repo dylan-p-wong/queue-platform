@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useInterval } from '../../components/useInterval';
+import UserQueue from '../../components/UserQueue';
 
 function Queue({ id, redirect }) {
   const [queueEntry, setQueueEntry] = useState(null);
@@ -51,21 +52,8 @@ function Queue({ id, redirect }) {
   }
 
   return (
-    <div
-      style={{
-        backgroundColor: queueEntry.status === "PASSED" ? "lime" : "yellow",
-        margin: 4,
-      }}
-    >
-      <p>Entry ID: {queueEntry.id}</p>
-      <p>Queue ID: {queueEntry.queue_id}</p>
-      <p>Email: {queueEntry.email}</p>
-      <p>Created At: {queueEntry.created_at}</p>
-      <p>Updated At: {queueEntry.updated_at}</p>
-      <p>Status {queueEntry.status}</p>
-      <p>Place in line: {queueEntry.place}</p>
-      <p>Redirect token {queueEntry.redirect_token}</p>
-      {queueEntry.redirect_token && <button id='redirect-back' onClick={redirectBack}>Take me back</button>}
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <UserQueue queueEntry={queueEntry} redirectBack={redirectBack}/>
     </div>
   );
 }

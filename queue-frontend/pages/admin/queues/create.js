@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PanelLayout from "../../../components/layout/PanelLayout";
+import styles from '../../../styles/Home.module.css';
 
 export default function CreateQueue() {
   const [data, setData] = useState({});
@@ -27,26 +28,28 @@ export default function CreateQueue() {
   }
 
   return (
-    <div>
-      <h1>Create Queue</h1>
-      <form onSubmit={onSubmit}>
-        <label>Title:
-          <input name="title" onChange={onChange} type="text" />
-        </label>
-        <label>Description:
-          <input name="description" onChange={onChange} type="text" />
-        </label>
-        <label>Token time (milliseconds):
-          <input name="token_time" onChange={onChange} type="number" />
-        </label>
-        <label>Passes every x milliseconds:
-          <input name="pass_rate" onChange={onChange} type="number" />
-        </label>
-        <label>Redirect root domain:
-          <input name="redirect_domain" onChange={onChange} type="text" />
-        </label>
-        <button type="submit">Create</button>
-      </form>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ maxWidth: 500 }}>
+        <h1>Create Queue</h1>
+        <form onSubmit={onSubmit}>
+          <label>Title:
+            <input style={{ width: '100%', padding: 8 }} name="title" onChange={onChange} type="text" />
+          </label>
+          <label>Description:
+            <input style={{ width: '100%', padding: 8 }} name="description" onChange={onChange} type="text" />
+          </label>
+          <label>Token time (milliseconds):
+            <input style={{ width: '100%', padding: 8 }} name="token_time" onChange={onChange} type="number" />
+          </label>
+          <label>Passes every x milliseconds:
+            <input style={{ width: '100%', padding: 8 }} name="pass_rate" onChange={onChange} type="number" />
+          </label>
+          <label>Redirect root domain:
+            <input style={{ width: '100%', padding: 8 }} name="redirect_domain" onChange={onChange} type="text" />
+          </label>
+          <button className={styles.button} type="submit">Create</button>
+        </form>
+      </div>
     </div>
   )
 }

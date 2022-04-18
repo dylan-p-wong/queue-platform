@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminQueue from '../../../components/AdminQueue';
+import AdminQueueEntry from '../../../components/AdminQueueEntry';
 import PanelLayout from '../../../components/layout/PanelLayout';
 
 function AdminQueuePage({ id }) {
@@ -45,9 +46,18 @@ function AdminQueuePage({ id }) {
   }
 
   return (
-    <div>
-      <AdminQueue refresh={refresh} queue={queue} showEntries={true}/>
-    </div>
+    <>
+      <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <AdminQueue refresh={refresh} queue={queue} showEntries={true}/>
+      </div>
+      <div>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {queue.queue_entries.map((queueEntry) => (
+            <AdminQueueEntry queueEntry={queueEntry} />
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
