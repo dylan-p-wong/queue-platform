@@ -42,7 +42,7 @@ func Init() {
   }
   log.Println("Database connected");
 
-  db.AutoMigrate(&models.Queue{}, &models.QueueEntry{}, &models.User{});
+  db.AutoMigrate(&models.User{}, &models.Queue{}, &models.QueueEntry{});
 }
 
 func GetDB() *gorm.DB {
