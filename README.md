@@ -24,9 +24,9 @@ On a protected queue route, if a user does not have a valid queue token, middlew
 ## Roadmap
 
 - [x] Initial queue flow
-- [x] Admin dashboard
-- [x] First demo site
+- [x] Admin queue dashboard
+- [x] First demo site and implementation
+- [ ] Create installable middleware packages
 - [ ] Timed drops
 - [ ] Bot protection features
-- [ ] More integrations
 - [ ] Scaleability tests
