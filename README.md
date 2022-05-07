@@ -25,7 +25,8 @@ On a protected queue route, if a user does not have a valid queue token, middlew
 
 - [x] Initial queue flow
 - [x] Admin queue dashboard
-- [x] First demo site and implementation
+- [x] First demo implementation and implementation
+- [ ] Containzerize and add Kubernetes
 - [ ] Create installable middleware packages
 - [ ] Timed drops
 - [ ] Bot protection features
